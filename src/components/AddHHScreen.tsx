@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check, Mic, CreditCard as Edit3, Sparkles, Heart, Star, MapPin, Users, MessageSquare } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Mic, Pencil, Sparkles, Heart, Star, MapPin, Users, MessageSquare } from 'lucide-react';
 import DuplicateCheckScreen from './DuplicateCheckScreen';
 import { HouseHold } from '../types';
 
@@ -365,7 +365,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-pink-50 p-4 rounded-lg border-2 border-pink-200">
             <div className="text-center mb-3">
-              <img src="/female.png" alt="Female Goat" className="w-12 h-12 mx-auto mb-2" />
+              <img src="/src/assets/female.png" alt="Female Goat" className="w-12 h-12 mx-auto mb-2" />
               <h4 className="font-semibold text-pink-900">बकरी</h4>
             </div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -384,7 +384,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
 
           <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
             <div className="text-center mb-3">
-              <img src="/male.png" alt="Male Goat" className="w-12 h-12 mx-auto mb-2" />
+              <img src="/src/assets/male.png" alt="Male Goat" className="w-12 h-12 mx-auto mb-2" />
               <h4 className="font-semibold text-blue-900">बकरे</h4>
             </div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -410,7 +410,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
     <div className="space-y-6">
       <div className="bg-pink-50 p-6 rounded-lg">
         <div className="text-center mb-6">
-          <img src="/female.png" alt="Female Goat" className="w-16 h-16 mx-auto mb-2" />
+          <img src="/src/assets/female.png" alt="Female Goat" className="w-16 h-16 mx-auto mb-2" />
           <h3 className="text-xl font-bold text-pink-900">बकरी की उम्र दर्ज करें</h3>
         </div>
         
@@ -469,7 +469,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
     <div className="space-y-6">
       <div className="bg-blue-50 p-6 rounded-lg">
         <div className="text-center mb-6">
-          <img src="/male.png" alt="Male Goat" className="w-16 h-16 mx-auto mb-2" />
+          <img src="/src/assets/male.png" alt="Male Goat" className="w-16 h-16 mx-auto mb-2" />
           <h3 className="text-xl font-bold text-blue-900">बकरे की उम्र दर्ज करें</h3>
         </div>
         
@@ -566,7 +566,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
               <p className="text-gray-600">{formData.village}</p>
             </div>
             <button onClick={() => setCurrentPage(0)} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-              <Edit3 className="h-4 w-4" />
+              <Pencil className="h-4 w-4" />
             </button>
           </div>
 

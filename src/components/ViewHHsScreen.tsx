@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, CreditCard as Edit, Clock, CheckCircle, AlertCircle, XCircle, Calendar, Filter, Check } from 'lucide-react';
+import { Search, Pencil, Clock, CheckCircle, AlertCircle, XCircle, Calendar, Filter, Check } from 'lucide-react';
 import { HouseHold } from '../types';
 
 interface ViewHHsScreenProps {
@@ -24,10 +24,9 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
     phoneNumber: '',
     village: '',
     community: '' as '' | 'General' | 'SC' | 'ST' | 'OBC' | 'Minority/Muslim',
-    femaleGoatCount: 0,
-    maleGoatCount: 0,
     femaleGoats: [] as Array<{ months: number; years: number }>,
-    maleGoats: [] as Array<{ months: number; years: number }>
+    maleGoats: [] as Array<{ months: number; years: number }>,
+    willingness: 'Yes' as 'Yes' | 'No' | 'Maybe'
   });
 
   const getSyncStatusIcon = (status: HouseHold['syncStatus']) => {
@@ -35,12 +34,8 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
       case 'synced':
         return (
           <div className="relative">
-            <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-            </div>
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center">
-              <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-            </div>
+            <CheckCircle className="h-5 w-5 text-green-500 fill-green-500" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-blue-500 rounded-full border border-white"></div>
           </div>
         );
       case 'pending':
@@ -112,10 +107,9 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
       phoneNumber: hh.phoneNumber,
       village: hh.village,
       community: hh.community,
-      femaleGoatCount: hh.femaleGoats.length,
-      maleGoatCount: hh.maleGoats.length,
       femaleGoats: [...hh.femaleGoats],
-      maleGoats: [...hh.maleGoats]
+      maleGoats: [...hh.maleGoats],
+      willingness: hh.willingness
     });
   };
 
@@ -140,15 +134,14 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
   const cancelEdit = () => {
     setEditingHH(null);
     setEditForm({ 
-      hhDidiName: '', 
-      relativeName: '', 
-      phoneNumber: '', 
-      village: '', 
+      hhDidiName: '',
+      relativeName: '',
+      phoneNumber: '',
+      village: '',
       community: '',
-      femaleGoatCount: 0,
-      maleGoatCount: 0,
       femaleGoats: [],
-      maleGoats: []
+      maleGoats: [],
+      willingness: 'Yes'
     });
   };
 
@@ -234,12 +227,214 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
               required
             >
               <option value="">गांव चुनें</option>
-              <option value="Village A">गांव अ</option>
-              <option value="Village B">गांव आ</option>
-              <option value="Village C">गांव इ</option>
-              <option value="Village D">गांव ई</option>
-              <option value="Village E">गांव उ</option>
+              <option value="Andayan">अंडायन</option>
+              <option value="Kuriyan Purwa">कुरियन पुरवा</option>
+              <option value="Dammu Purwa">डम्मू पुरवा</option>
+              <option value="Ikghara">इकघरा</option>
             </select>
+          </div>
+
+          <div className="bg-green-50 p-4 rounded-lg space-y-4">
+            <h3 className="font-semibold text-gray-900">बकरी और बकरे की संख्या</h3>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-pink-50 p-3 rounded-lg border-2 border-pink-200">
+                <div className="text-center mb-3">
+                  <img src="/src/assets/female.png" alt="Female Goat" className="w-10 h-10 mx-auto mb-2" />
+                  <h4 className="font-semibold text-pink-900">बकरी</h4>
+                </div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  कितनी बकरियां हैं?
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="50"
+                  value={editForm.femaleGoats.length || ''}
+                  onChange={(e) => {
+                    const count = parseInt(e.target.value) || 0;
+                    const newFemaleGoats = Array(count).fill(null).map((_, i) =>
+                      editForm.femaleGoats[i] || { months: 0, years: 0 }
+                    );
+                    setEditForm(prev => ({ ...prev, femaleGoats: newFemaleGoats }));
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center"
+                  placeholder="संख्या दर्ज करें"
+                />
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg border-2 border-blue-200">
+                <div className="text-center mb-3">
+                  <img src="/src/assets/male.png" alt="Male Goat" className="w-10 h-10 mx-auto mb-2" />
+                  <h4 className="font-semibold text-blue-900">बकरे</h4>
+                </div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  कितने बकरे हैं?
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="50"
+                  value={editForm.maleGoats.length || ''}
+                  onChange={(e) => {
+                    const count = parseInt(e.target.value) || 0;
+                    const newMaleGoats = Array(count).fill(null).map((_, i) =>
+                      editForm.maleGoats[i] || { months: 0, years: 0 }
+                    );
+                    setEditForm(prev => ({ ...prev, maleGoats: newMaleGoats }));
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center"
+                  placeholder="संख्या दर्ज करें"
+                />
+              </div>
+            </div>
+          </div>
+
+          {editForm.femaleGoats.length > 0 && (
+            <div className="bg-pink-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-pink-900 mb-3">बकरी की उम्र दर्ज करें</h3>
+              {editForm.femaleGoats.map((goat, index) => (
+                <div key={index} className={`bg-white p-3 rounded-lg border-2 mb-3 ${
+                  goat.years === 0 && goat.months === 0
+                    ? 'border-red-300 bg-red-50'
+                    : 'border-green-300 bg-green-50'
+                }`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900 text-sm">बकरी #{index + 1}</h4>
+                    <div className={`w-2 h-2 rounded-full ${
+                      goat.years === 0 && goat.months === 0
+                        ? 'bg-red-500'
+                        : 'bg-green-500'
+                    }`}></div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        साल
+                      </label>
+                      <select
+                        value={goat.years}
+                        onChange={(e) => {
+                          const newFemaleGoats = [...editForm.femaleGoats];
+                          newFemaleGoats[index] = { ...goat, years: parseInt(e.target.value) };
+                          setEditForm(prev => ({ ...prev, femaleGoats: newFemaleGoats }));
+                        }}
+                        className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {Array.from({ length: 11 }, (_, i) => (
+                          <option key={i} value={i}>{i} साल</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        महीने
+                      </label>
+                      <select
+                        value={goat.months}
+                        onChange={(e) => {
+                          const newFemaleGoats = [...editForm.femaleGoats];
+                          newFemaleGoats[index] = { ...goat, months: parseInt(e.target.value) };
+                          setEditForm(prev => ({ ...prev, femaleGoats: newFemaleGoats }));
+                        }}
+                        className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {Array.from({ length: 12 }, (_, i) => (
+                          <option key={i} value={i}>{i} महीने</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {editForm.maleGoats.length > 0 && (
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-blue-900 mb-3">बकरे की उम्र दर्ज करें</h3>
+              {editForm.maleGoats.map((goat, index) => (
+                <div key={index} className={`bg-white p-3 rounded-lg border-2 mb-3 ${
+                  goat.years === 0 && goat.months === 0
+                    ? 'border-red-300 bg-red-50'
+                    : 'border-green-300 bg-green-50'
+                }`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900 text-sm">बकरे #{index + 1}</h4>
+                    <div className={`w-2 h-2 rounded-full ${
+                      goat.years === 0 && goat.months === 0
+                        ? 'bg-red-500'
+                        : 'bg-green-500'
+                    }`}></div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        साल
+                      </label>
+                      <select
+                        value={goat.years}
+                        onChange={(e) => {
+                          const newMaleGoats = [...editForm.maleGoats];
+                          newMaleGoats[index] = { ...goat, years: parseInt(e.target.value) };
+                          setEditForm(prev => ({ ...prev, maleGoats: newMaleGoats }));
+                        }}
+                        className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {Array.from({ length: 11 }, (_, i) => (
+                          <option key={i} value={i}>{i} साल</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        महीने
+                      </label>
+                      <select
+                        value={goat.months}
+                        onChange={(e) => {
+                          const newMaleGoats = [...editForm.maleGoats];
+                          newMaleGoats[index] = { ...goat, months: parseInt(e.target.value) };
+                          setEditForm(prev => ({ ...prev, maleGoats: newMaleGoats }));
+                        }}
+                        className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {Array.from({ length: 12 }, (_, i) => (
+                          <option key={i} value={i}>{i} महीने</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="bg-orange-50 p-4 rounded-lg">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              इच्छा
+            </label>
+            <p className="text-xs text-gray-600 mb-3">क्या परिवार पशु सखी से सशुल्क सेवा लेने में रुचि रखते हैं?</p>
+            <div className="space-y-2">
+              {(['Yes', 'No', 'Maybe'] as const).map((option) => (
+                <label
+                  key={option}
+                  className="flex items-center p-2 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="willingness"
+                    value={option}
+                    checked={editForm.willingness === option}
+                    onChange={() => setEditForm(prev => ({ ...prev, willingness: option }))}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="ml-3 text-sm text-gray-900 font-medium">
+                    {option === 'Yes' ? 'हां' : option === 'No' ? 'नहीं' : 'शायद'}
+                  </span>
+                </label>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -367,7 +562,7 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
                         onClick={() => startEdit(hh)}
                         className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       >
-                        <Edit className="h-4 w-4" />
+                        <Pencil className="h-4 w-4" />
                       </button>
                     </div>
                     
