@@ -348,7 +348,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   const renderGoatCounts = () => (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-2">बकरीपालक के पास कितने बकरे हैं?</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-2">बकरीपालक के पास कितनी बकरी और कितने बकरे हैं?</h2>
         <p className="text-sm text-gray-600">कृपया संख्या बताएं</p>
       </div>
 
