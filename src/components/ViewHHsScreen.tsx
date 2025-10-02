@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Search, Pencil, Clock, CheckCircle, AlertCircle, XCircle, Calendar, Filter, Check } from 'lucide-react';
 import { HouseHold } from '../types';
+import femaleGoatIcon from '../assets/female.png';
+import maleGoatIcon from '../assets/male.png';
 
 interface ViewHHsScreenProps {
   households: HouseHold[];
@@ -240,7 +242,7 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-pink-50 p-3 rounded-lg border-2 border-pink-200">
                 <div className="text-center mb-3">
-                  <img src="/src/assets/female.png" alt="Female Goat" className="w-10 h-10 mx-auto mb-2" />
+                  <img src={femaleGoatIcon} alt="Female Goat" className="w-10 h-10 mx-auto mb-2" />
                   <h4 className="font-semibold text-pink-900">बकरी</h4>
                 </div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -265,7 +267,7 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
 
               <div className="bg-blue-50 p-3 rounded-lg border-2 border-blue-200">
                 <div className="text-center mb-3">
-                  <img src="/src/assets/male.png" alt="Male Goat" className="w-10 h-10 mx-auto mb-2" />
+                  <img src={maleGoatIcon} alt="Male Goat" className="w-10 h-10 mx-auto mb-2" />
                   <h4 className="font-semibold text-blue-900">बकरे</h4>
                 </div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
