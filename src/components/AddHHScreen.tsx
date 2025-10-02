@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check, Mic, Pencil, Sparkles, Heart, Star, MapPin, Users, MessageSquare, Edit3 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Mic, Pencil, Sparkles, Heart, Star, MapPin, Users, MessageSquare, CreditCard as Edit3 } from 'lucide-react';
 import DuplicateCheckScreen from './DuplicateCheckScreen';
 import { HouseHold } from '../types';
 
