@@ -366,7 +366,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-pink-50 p-4 rounded-lg border-2 border-pink-200">
             <div className="text-center mb-3">
-              <img src="/female.png" alt="Female Goat" className="w-12 h-12 mx-auto mb-2" />
+              <div className="text-4xl mb-2">🐑</div>
               <h4 className="font-semibold text-pink-900">बकरी</h4>
             </div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -383,9 +383,9 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
             />
           </div>
           
-            <img src="/female.png" alt="Female Goat" className="w-16 h-16 mx-auto mb-2" />
+          <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
             <div className="text-center mb-3">
-              <img src="/male.png" alt="Male Goat" className="w-12 h-12 mx-auto mb-2" />
+              <div className="text-4xl mb-2">🐐</div>
               <h4 className="font-semibold text-blue-900">बकरे</h4>
             </div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -411,7 +411,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
     <div className="space-y-6">
       <div className="bg-pink-50 p-6 rounded-lg">
         <div className="text-center mb-6">
-          <img src="/female.png" alt="Female Goat" className="w-16 h-16 mx-auto mb-2" />
+          <div className="text-6xl mb-2">🐑</div>
           <h3 className="text-xl font-bold text-pink-900">बकरी की उम्र दर्ज करें</h3>
         </div>
         
@@ -470,7 +470,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
     <div className="space-y-6">
       <div className="bg-blue-50 p-6 rounded-lg">
         <div className="text-center mb-6">
-          <img src="/male.png" alt="Male Goat" className="w-16 h-16 mx-auto mb-2" />
+          <div className="text-6xl mb-2">🐐</div>
           <h3 className="text-xl font-bold text-blue-900">बकरे की उम्र दर्ज करें</h3>
         </div>
         
@@ -545,14 +545,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500"
               />
               <span className="ml-3 text-gray-900 font-medium">
-                <span className="text-pink-600 flex items-center">
-                  <img src="/female.png" alt="Female Goat" className="w-4 h-4 mr-1" />
-                  {household.femaleGoats.length}
-                </span>, 
-                <span className="text-blue-600 flex items-center">
-                  <img src="/male.png" alt="Male Goat" className="w-4 h-4 mr-1" />
-                  {household.maleGoats.length}
-                </span>
+                {option === 'Yes' ? 'हां' : option === 'No' ? 'नहीं' : 'शायद'}
               </span>
             </label>
           ))}
