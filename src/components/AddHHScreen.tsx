@@ -346,180 +346,234 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
 
   // Page 3: Female Goats
   const renderGoatCounts = () => (
-    <div className="space-y-6">
-      <div className="bg-green-50 p-6 rounded-lg">
-        <div className="text-center mb-6">
-          <div className="flex justify-center space-x-8 mb-4">
-            <div className="text-center">
-              <div className="text-6xl mb-2">🐐</div>
-              <h3 className="text-lg font-bold text-green-900">बकरी</h3>
-            </div>
-            <div className="text-center">
-              <div className="text-6xl mb-2">🐐</div>
-              <h3 className="text-lg font-bold text-blue-900">बकरे</h3>
-            </div>
-          </div>
-          <h2 className="text-xl font-bold text-gray-900">बकरीपालक के यहां कितनी बकरी और कितने बकरे है?</h2>
-        </div>
-        
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-pink-50 p-4 rounded-lg border-2 border-pink-200">
-            <div className="text-center mb-3">
-              <img src="/src/assets/female.png" alt="Female Goat" className="w-12 h-12 mx-auto mb-2" />
-              <h4 className="font-semibold text-pink-900">बकरी</h4>
-            </div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              कितनी बकरियां हैं?
-            </label>
-            <input
-              type="number"
-              min="0"
-              max="50"
-              value={femaleGoatCount || ''}
-              onChange={(e) => handleFemaleGoatCountChange(parseInt(e.target.value) || 0)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center"
-              placeholder="संख्या दर्ज करें"
-            />
-          </div>
+    <div className="space-y-4">
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-2">बकरीपालक के पास कितने बकरे हैं?</h2>
+        <p className="text-sm text-gray-600">कृपया संख्या बताएं</p>
+      </div>
 
-          <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
-            <div className="text-center mb-3">
-              <img src="/src/assets/male.png" alt="Male Goat" className="w-12 h-12 mx-auto mb-2" />
-              <h4 className="font-semibold text-blue-900">बकरे</h4>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-5 rounded-2xl border-2 border-pink-200 shadow-sm hover:shadow-md transition-all">
+          <div className="text-center mb-4">
+            <div className="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm">
+              <img src="/src/assets/female.png" alt="Female Goat" className="w-14 h-14" />
             </div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              कितने बकरे हैं?
-            </label>
-            <input
-              type="number"
-              min="0"
-              max="50"
-              value={maleGoatCount || ''}
-              onChange={(e) => handleMaleGoatCountChange(parseInt(e.target.value) || 0)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center"
-              placeholder="संख्या दर्ज करें"
-            />
+            <h4 className="font-bold text-pink-900 text-lg mb-1">बकरी</h4>
+            <p className="text-xs text-pink-700">Female Goats</p>
           </div>
+          <input
+            type="number"
+            min="0"
+            max="50"
+            value={femaleGoatCount || ''}
+            onChange={(e) => handleFemaleGoatCountChange(parseInt(e.target.value) || 0)}
+            className="w-full px-4 py-4 border-2 border-pink-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-center text-2xl font-bold text-pink-900 bg-white"
+            placeholder="0"
+          />
+        </div>
+
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-2xl border-2 border-blue-200 shadow-sm hover:shadow-md transition-all">
+          <div className="text-center mb-4">
+            <div className="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm">
+              <img src="/src/assets/male.png" alt="Male Goat" className="w-14 h-14" />
+            </div>
+            <h4 className="font-bold text-blue-900 text-lg mb-1">बकरा</h4>
+            <p className="text-xs text-blue-700">Male Goats</p>
+          </div>
+          <input
+            type="number"
+            min="0"
+            max="50"
+            value={maleGoatCount || ''}
+            onChange={(e) => handleMaleGoatCountChange(parseInt(e.target.value) || 0)}
+            className="w-full px-4 py-4 border-2 border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center text-2xl font-bold text-blue-900 bg-white"
+            placeholder="0"
+          />
         </div>
       </div>
+
+      {(femaleGoatCount > 0 || maleGoatCount > 0) && (
+        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+          <div className="flex items-center justify-center space-x-3">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <p className="text-green-800 font-semibold">
+              कुल: {femaleGoatCount + maleGoatCount} बकरे
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 
   // Page 4: Female Goats Ages
   const renderFemaleGoats = () => (
-    <div className="space-y-6">
-      <div className="bg-pink-50 p-6 rounded-lg">
-        <div className="text-center mb-6">
-          <img src="/src/assets/female.png" alt="Female Goat" className="w-16 h-16 mx-auto mb-2" />
-          <h3 className="text-xl font-bold text-pink-900">बकरी की उम्र दर्ज करें</h3>
+    <div className="space-y-4">
+      <div className="text-center mb-4">
+        <div className="bg-gradient-to-br from-pink-100 to-pink-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md">
+          <img src="/src/assets/female.png" alt="Female Goat" className="w-14 h-14" />
         </div>
-        
-        {formData.femaleGoats.map((goat, index) => (
-          <div key={index} className={`bg-white p-4 rounded-lg border-2 mb-3 ${
-            goat.years === 0 && goat.months === 0 
-              ? 'border-red-300 bg-red-50' 
-              : 'border-green-300 bg-green-50'
-          }`}>
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="font-medium text-gray-900">बकरी #{index + 1} की उम्र</h4>
-              <div className={`w-3 h-3 rounded-full ${
-                goat.years === 0 && goat.months === 0 
-                  ? 'bg-red-500' 
-                  : 'bg-green-500'
-              }`}></div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  साल
-                </label>
-                <select
-                  value={goat.years}
-                  onChange={(e) => updateFemaleGoatAge(index, 'years', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  {Array.from({ length: 11 }, (_, i) => (
-                    <option key={i} value={i}>{i} साल</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  महीने
-                </label>
-                <select
-                  value={goat.months}
-                  onChange={(e) => updateFemaleGoatAge(index, 'months', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i} value={i}>{i} महीने</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        ))}
+        <h3 className="text-xl font-bold text-pink-900 mb-1">बकरी की उम्र</h3>
+        <p className="text-sm text-gray-600">कृपया प्रत्येक बकरी की उम्र दर्ज करें</p>
       </div>
+
+      <div className="space-y-3">
+        {formData.femaleGoats.map((goat, index) => {
+          const isComplete = goat.years > 0 || goat.months > 0;
+          return (
+            <div key={index} className={`relative p-4 rounded-xl border-2 transition-all ${
+              isComplete
+                ? 'bg-gradient-to-br from-green-50 to-white border-green-300 shadow-sm'
+                : 'bg-gradient-to-br from-red-50 to-white border-red-300'
+            }`}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-pink-100 w-8 h-8 rounded-full flex items-center justify-center">
+                    <span className="text-pink-900 font-bold text-sm">{index + 1}</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-900">बकरी #{index + 1}</h4>
+                </div>
+                <div className={`w-3 h-3 rounded-full ${
+                  isComplete ? 'bg-green-500' : 'bg-red-400 animate-pulse'
+                }`}></div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                    साल (Years)
+                  </label>
+                  <select
+                    value={goat.years}
+                    onChange={(e) => updateFemaleGoatAge(index, 'years', parseInt(e.target.value))}
+                    className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 font-semibold text-gray-900 bg-white"
+                  >
+                    {Array.from({ length: 11 }, (_, i) => (
+                      <option key={i} value={i}>{i} साल</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                    महीने (Months)
+                  </label>
+                  <select
+                    value={goat.months}
+                    onChange={(e) => updateFemaleGoatAge(index, 'months', parseInt(e.target.value))}
+                    className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 font-semibold text-gray-900 bg-white"
+                  >
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <option key={i} value={i}>{i} महीने</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              {isComplete && (
+                <div className="mt-2 text-xs text-green-700 font-medium">
+                  ✓ उम्र: {goat.years} साल {goat.months} महीने
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {formData.femaleGoats.length > 0 && (
+        <div className="mt-4 p-3 bg-pink-100 border border-pink-300 rounded-xl">
+          <div className="text-center">
+            <p className="text-pink-900 font-semibold text-sm">
+              कुल बकरियां: {formData.femaleGoats.length}
+            </p>
+            <p className="text-xs text-pink-700 mt-1">
+              पूर्ण: {formData.femaleGoats.filter(g => g.years > 0 || g.months > 0).length} / {formData.femaleGoats.length}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 
   // Page 5: Male Goats Ages
   const renderMaleGoats = () => (
-    <div className="space-y-6">
-      <div className="bg-blue-50 p-6 rounded-lg">
-        <div className="text-center mb-6">
-          <img src="/src/assets/male.png" alt="Male Goat" className="w-16 h-16 mx-auto mb-2" />
-          <h3 className="text-xl font-bold text-blue-900">बकरे की उम्र दर्ज करें</h3>
+    <div className="space-y-4">
+      <div className="text-center mb-4">
+        <div className="bg-gradient-to-br from-blue-100 to-blue-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md">
+          <img src="/src/assets/male.png" alt="Male Goat" className="w-14 h-14" />
         </div>
-        
-        {formData.maleGoats.map((goat, index) => (
-          <div key={index} className={`bg-white p-4 rounded-lg border-2 mb-3 ${
-            goat.years === 0 && goat.months === 0 
-              ? 'border-red-300 bg-red-50' 
-              : 'border-green-300 bg-green-50'
-          }`}>
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="font-medium text-gray-900">बकरे #{index + 1} की उम्र</h4>
-              <div className={`w-3 h-3 rounded-full ${
-                goat.years === 0 && goat.months === 0 
-                  ? 'bg-red-500' 
-                  : 'bg-green-500'
-              }`}></div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  साल
-                </label>
-                <select
-                  value={goat.years}
-                  onChange={(e) => updateMaleGoatAge(index, 'years', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  {Array.from({ length: 11 }, (_, i) => (
-                    <option key={i} value={i}>{i} साल</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  महीने
-                </label>
-                <select
-                  value={goat.months}
-                  onChange={(e) => updateMaleGoatAge(index, 'months', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i} value={i}>{i} महीने</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        ))}
+        <h3 className="text-xl font-bold text-blue-900 mb-1">बकरे की उम्र</h3>
+        <p className="text-sm text-gray-600">कृपया प्रत्येक बकरे की उम्र दर्ज करें</p>
       </div>
+
+      <div className="space-y-3">
+        {formData.maleGoats.map((goat, index) => {
+          const isComplete = goat.years > 0 || goat.months > 0;
+          return (
+            <div key={index} className={`relative p-4 rounded-xl border-2 transition-all ${
+              isComplete
+                ? 'bg-gradient-to-br from-green-50 to-white border-green-300 shadow-sm'
+                : 'bg-gradient-to-br from-red-50 to-white border-red-300'
+            }`}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-blue-100 w-8 h-8 rounded-full flex items-center justify-center">
+                    <span className="text-blue-900 font-bold text-sm">{index + 1}</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-900">बकरा #{index + 1}</h4>
+                </div>
+                <div className={`w-3 h-3 rounded-full ${
+                  isComplete ? 'bg-green-500' : 'bg-red-400 animate-pulse'
+                }`}></div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                    साल (Years)
+                  </label>
+                  <select
+                    value={goat.years}
+                    onChange={(e) => updateMaleGoatAge(index, 'years', parseInt(e.target.value))}
+                    className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold text-gray-900 bg-white"
+                  >
+                    {Array.from({ length: 11 }, (_, i) => (
+                      <option key={i} value={i}>{i} साल</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                    महीने (Months)
+                  </label>
+                  <select
+                    value={goat.months}
+                    onChange={(e) => updateMaleGoatAge(index, 'months', parseInt(e.target.value))}
+                    className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold text-gray-900 bg-white"
+                  >
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <option key={i} value={i}>{i} महीने</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              {isComplete && (
+                <div className="mt-2 text-xs text-green-700 font-medium">
+                  ✓ उम्र: {goat.years} साल {goat.months} महीने
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {formData.maleGoats.length > 0 && (
+        <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded-xl">
+          <div className="text-center">
+            <p className="text-blue-900 font-semibold text-sm">
+              कुल बकरे: {formData.maleGoats.length}
+            </p>
+            <p className="text-xs text-blue-700 mt-1">
+              पूर्ण: {formData.maleGoats.filter(g => g.years > 0 || g.months > 0).length} / {formData.maleGoats.length}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 
