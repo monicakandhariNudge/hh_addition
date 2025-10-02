@@ -369,10 +369,10 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
           required
         >
           <option value="">समुदाय चुनें</option>
-          <option value="General">सामान्य (General)</option>
-          <option value="SC">अनुसूचित जाति (SC)</option>
-          <option value="ST">अनुसूचित जनजाति (ST)</option>
-          <option value="OBC">अन्य पिछड़ा वर्ग (OBC)</option>
+          <option value="General">सामान्य</option>
+          <option value="SC">अनुसूचित जाति</option>
+          <option value="ST">अनुसूचित जनजाति</option>
+          <option value="OBC">अन्य पिछड़ा वर्ग</option>
           <option value="Minority/Muslim">अल्पसंख्यक/मुस्लिम</option>
         </select>
       </div>
@@ -390,11 +390,10 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-5 rounded-2xl border-2 border-pink-200 shadow-sm hover:shadow-md transition-all">
           <div className="text-center mb-4">
-            <div className="bg-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md border-2 border-pink-300">
-              <img src="/src/assets/female.png" alt="Female Goat" className="w-20 h-20" />
+            <div className="bg-white w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md border-2 border-pink-300">
+              <img src="/src/assets/female.png" alt="Female Goat" className="w-16 h-16 sm:w-20 sm:h-20" />
             </div>
             <h4 className="font-bold text-pink-900 text-lg mb-1">बकरी</h4>
-            <p className="text-xs text-pink-700">Female Goats</p>
           </div>
           <input
             type="number"
@@ -409,11 +408,10 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
 
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-2xl border-2 border-blue-200 shadow-sm hover:shadow-md transition-all">
           <div className="text-center mb-4">
-            <div className="bg-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md border-2 border-blue-300">
-              <img src="/src/assets/male.png" alt="Male Goat" className="w-20 h-20" />
+            <div className="bg-white w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md border-2 border-blue-300">
+              <img src="/src/assets/male.png" alt="Male Goat" className="w-16 h-16 sm:w-20 sm:h-20" />
             </div>
             <h4 className="font-bold text-blue-900 text-lg mb-1">बकरा</h4>
-            <p className="text-xs text-blue-700">Male Goats</p>
           </div>
           <input
             type="number"
@@ -449,7 +447,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
             </div>
           </div>
           <p className="text-center text-sm font-semibold text-green-800 mt-3">
-            कुल झुंड: {femaleGoatCount + maleGoatCount} बकरे
+            कुल झुंड: {femaleGoatCount + maleGoatCount}
           </p>
         </div>
       )}
@@ -490,7 +488,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                    साल (Years)
+                    साल
                   </label>
                   <select
                     value={goat.years}
@@ -504,7 +502,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                    महीने (Months)
+                    महीने
                   </label>
                   <select
                     value={goat.months}
@@ -576,7 +574,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                    साल (Years)
+                    साल
                   </label>
                   <select
                     value={goat.years}
@@ -590,7 +588,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-                    महीने (Months)
+                    महीने
                   </label>
                   <select
                     value={goat.months}
