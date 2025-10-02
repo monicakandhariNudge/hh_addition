@@ -38,7 +38,6 @@ const MainApp: React.FC<MainAppProps> = ({
       case 0:
         return (
           <AddHHScreen
-            serialNumber={households.length + 1}
             onAddHousehold={onAddHousehold}
             onAddPending={onAddPending}
             existingHouseholds={households}

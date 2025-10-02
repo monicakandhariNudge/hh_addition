@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check, Mic, Pencil, Sparkles, Heart, Star, MapPin, Users, MessageSquare, CreditCard as Edit3 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Mic, Pencil, Sparkles, Heart, Star, MapPin, Users, MessageSquare } from 'lucide-react';
 import DuplicateCheckScreen from './DuplicateCheckScreen';
 import { HouseHold } from '../types';
 
 interface AddHHScreenProps {
-  serialNumber: number;
   onAddHousehold: (household: HouseHold) => void;
   onAddPending: (household: HouseHold) => void;
   existingHouseholds: HouseHold[];
@@ -12,7 +11,6 @@ interface AddHHScreenProps {
 }
 
 const AddHHScreen: React.FC<AddHHScreenProps> = ({
-  serialNumber,
   onAddHousehold,
   onAddPending,
   existingHouseholds,
@@ -22,6 +20,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   const [showDuplicateCheck, setShowDuplicateCheck] = useState(false);
   const [showSuccessGraffiti, setShowSuccessGraffiti] = useState(false);
   const [formData, setFormData] = useState({
+    serialNumber: '',
     village: '',
     hhDidiName: '',
     relativeName: '',
@@ -130,14 +129,21 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
 
   const sendSMS = async () => {
     // Mock SMS sending
-    console.log(`SMS sent: घर #${serialNumber} सफलतापूर्वक जोड़ा गया। धन्यवाद!`);
+    console.log(`SMS sent: घर #${formData.serialNumber} सफलतापूर्वक जोड़ा गया। धन्यवाद!`);
   };
 
   const handleSubmit = () => {
     const newHousehold: HouseHold = {
       id: Date.now().toString(),
-      serialNumber,
-      ...formData,
+      serialNumber: parseInt(formData.serialNumber),
+      village: formData.village,
+      hhDidiName: formData.hhDidiName,
+      relativeName: formData.relativeName,
+      phoneNumber: formData.phoneNumber,
+      community: formData.community,
+      femaleGoats: formData.femaleGoats,
+      maleGoats: formData.maleGoats,
+      willingness: formData.willingness,
       syncStatus: 'pending',
       createdAt: new Date()
     };
@@ -183,8 +189,15 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   const handleDuplicateResolution = (action: 'select' | 'keep-both', selectedHH?: HouseHold) => {
     const newHousehold: HouseHold = {
       id: Date.now().toString(),
-      serialNumber,
-      ...formData,
+      serialNumber: parseInt(formData.serialNumber),
+      village: formData.village,
+      hhDidiName: formData.hhDidiName,
+      relativeName: formData.relativeName,
+      phoneNumber: formData.phoneNumber,
+      community: formData.community,
+      femaleGoats: formData.femaleGoats,
+      maleGoats: formData.maleGoats,
+      willingness: formData.willingness,
       syncStatus: 'pending',
       createdAt: new Date()
     };
@@ -210,8 +223,15 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
       <DuplicateCheckScreen
         newHousehold={{
           id: 'new',
-          serialNumber,
-          ...formData,
+          serialNumber: parseInt(formData.serialNumber),
+          village: formData.village,
+          hhDidiName: formData.hhDidiName,
+          relativeName: formData.relativeName,
+          phoneNumber: formData.phoneNumber,
+          community: formData.community,
+          femaleGoats: formData.femaleGoats,
+          maleGoats: formData.maleGoats,
+          willingness: formData.willingness,
           syncStatus: 'pending',
           createdAt: new Date()
         }}
@@ -225,6 +245,21 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   // Page 1: Village Selection
   const renderVillageSelection = () => (
     <div className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          क्रम संख्या (Serial Number) *
+        </label>
+        <input
+          type="number"
+          value={formData.serialNumber}
+          onChange={(e) => handleInputChange('serialNumber', e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-semibold"
+          placeholder="क्रम संख्या दर्ज करें"
+          required
+          min="1"
+        />
+      </div>
+
       <div className="text-center">
         <MapPin className="h-12 w-12 text-blue-600 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-gray-900 mb-2">गांव चुनें</h3>
@@ -628,15 +663,25 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
     <div className="space-y-6">
       <div className="bg-gray-50 p-4 rounded-lg">
         <h3 className="font-semibold text-gray-900 mb-4">कृपया पुनः जाँच करें</h3>
-        
+
         <div className="space-y-4">
+          <div className="flex items-center justify-between p-3 bg-white rounded border">
+            <div>
+              <p className="font-medium">क्रम संख्या</p>
+              <p className="text-gray-600 text-lg font-semibold">#{formData.serialNumber}</p>
+            </div>
+            <button onClick={() => setCurrentPage(0)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Pencil className="h-5 w-5" />
+            </button>
+          </div>
+
           <div className="flex items-center justify-between p-3 bg-white rounded border">
             <div>
               <p className="font-medium">गांव</p>
               <p className="text-gray-600">{formData.village}</p>
             </div>
-            <button onClick={() => setCurrentPage(0)} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-              <Pencil className="h-4 w-4" />
+            <button onClick={() => setCurrentPage(0)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Pencil className="h-5 w-5" />
             </button>
           </div>
 
@@ -645,8 +690,8 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
               <p className="font-medium">बकरीपालक दीदी का नाम</p>
               <p className="text-gray-600">{formData.hhDidiName}</p>
             </div>
-            <button onClick={() => setCurrentPage(1)} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-              <Edit3 className="h-4 w-4" />
+            <button onClick={() => setCurrentPage(1)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Pencil className="h-5 w-5" />
             </button>
           </div>
 
@@ -655,8 +700,8 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
               <p className="font-medium">पिता या पति का नाम</p>
               <p className="text-gray-600">{formData.relativeName}</p>
             </div>
-            <button onClick={() => setCurrentPage(1)} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-              <Edit3 className="h-4 w-4" />
+            <button onClick={() => setCurrentPage(1)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Pencil className="h-5 w-5" />
             </button>
           </div>
           <div className="flex items-center justify-between p-3 bg-white rounded border">
@@ -664,8 +709,8 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
               <p className="font-medium">समुदाय</p>
               <p className="text-gray-600">{formData.community}</p>
             </div>
-            <button onClick={() => setCurrentPage(1)} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-              <Edit3 className="h-4 w-4" />
+            <button onClick={() => setCurrentPage(1)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Pencil className="h-5 w-5" />
             </button>
           </div>
 
@@ -677,8 +722,8 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
                 <span className="text-blue-600 flex items-center">🐐 बकरा- {formData.maleGoats.length}</span>
               </p>
             </div>
-            <button onClick={() => setCurrentPage(2)} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-              <Edit3 className="h-4 w-4" />
+            <button onClick={() => setCurrentPage(2)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Pencil className="h-5 w-5" />
             </button>
           </div>
 
@@ -689,8 +734,8 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
                 {formData.willingness === 'Yes' ? 'हां' : formData.willingness === 'No' ? 'नहीं' : 'शायद'}
               </p>
             </div>
-            <button onClick={() => setCurrentPage(4)} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
-              <Edit3 className="h-4 w-4" />
+            <button onClick={() => setCurrentPage(4)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Pencil className="h-5 w-5" />
             </button>
           </div>
         </div>
@@ -742,7 +787,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   const canProceed = () => {
     switch (currentPage) {
       case 0:
-        return formData.village;
+        return formData.serialNumber && formData.village;
       case 1:
         return formData.hhDidiName && formData.relativeName && formData.community;
       case 2:
@@ -769,7 +814,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <span className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-1 rounded">
-              #{serialNumber}
+              #{formData.serialNumber || '...'}
             </span>
             <h2 className="text-lg font-semibold">घर जोड़ें</h2>
           </div>
