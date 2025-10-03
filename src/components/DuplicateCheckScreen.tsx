@@ -30,7 +30,7 @@ const DuplicateCheckScreen: React.FC<DuplicateCheckScreenProps> = ({
       <h3 className={`font-semibold mb-3 ${isNew ? 'text-orange-900' : 'text-blue-900'}`}>{title}</h3>
       <div className="space-y-2">
         <div className="flex justify-between">
-          <span className="text-sm text-gray-600">क्रम संख्या:</span>
+          <span className="text-sm text-gray-600">बुकलेट संख्या:</span>
           <span className="font-medium">{household.serialNumber}</span>
         </div>
         <div className="flex justify-between">

@@ -99,7 +99,7 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
     sum + hh.femaleGoats.length + hh.maleGoats.length, 0
   );
 
-  const villages = ['Andayan', 'Kuriyan Purwa', 'Dammu Purwa', 'Ikghara'];
+  const villages = ['अंडायन', 'कुरियन पुरवा', 'डम्मू पुरवा', 'इकघरा'];
 
   const startEdit = (hh: HouseHold) => {
     setEditingHH(hh);
@@ -152,7 +152,7 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
       <div className="flex flex-col h-full bg-white">
         <div className="bg-white border-b p-4">
           <h2 className="text-lg font-semibold">घर संपादित करें</h2>
-          <p className="text-sm text-gray-600">क्रम संख्या: {editingHH.serialNumber}</p>
+          <p className="text-sm text-gray-600">बुकलेट संख्या: {editingHH.serialNumber}</p>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-6">
@@ -229,10 +229,10 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
               required
             >
               <option value="">गांव चुनें</option>
-              <option value="Andayan">अंडायन</option>
-              <option value="Kuriyan Purwa">कुरियन पुरवा</option>
-              <option value="Dammu Purwa">डम्मू पुरवा</option>
-              <option value="Ikghara">इकघरा</option>
+              <option value="अंडायन">अंडायन</option>
+              <option value="कुरियन पुरवा">कुरियन पुरवा</option>
+              <option value="डम्मू पुरवा">डम्मू पुरवा</option>
+              <option value="इकघरा">इकघरा</option>
             </select>
           </div>
 
@@ -506,15 +506,12 @@ const ViewHHsScreen: React.FC<ViewHHsScreenProps> = ({
                   key={village}
                   onClick={() => setSelectedVillage(village)}
                   className={`p-2 text-xs rounded-lg border transition-colors ${
-                    selectedVillage === village 
-                      ? 'bg-blue-100 border-blue-300 text-blue-700' 
+                    selectedVillage === village
+                      ? 'bg-blue-100 border-blue-300 text-blue-700'
                       : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
-                  {village === 'Village A' ? 'गांव अ' : 
-                   village === 'Village B' ? 'गांव आ' : 
-                   village === 'Village C' ? 'गांव इ' :
-                   village === 'Village D' ? 'गांव ई' : 'गांव उ'}
+                  {village}
                 </button>
               ))}
             </div>

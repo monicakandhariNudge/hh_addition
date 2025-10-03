@@ -39,10 +39,10 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   const [currentField, setCurrentField] = useState<string | null>(null);
 
   const villages = [
-    { id: 'andayan', name: 'अंडायन', nameEn: 'Andayan' },
-    { id: 'kuriyan-purwa', name: 'कुरियन पुरवा', nameEn: 'Kuriyan Purwa' },
-    { id: 'dammu-purwa', name: 'डम्मू पुरवा', nameEn: 'Dammu Purwa' },
-    { id: 'ikghara', name: 'इकघरा', nameEn: 'Ikghara' }
+    { id: 'andayan', name: 'अंडायन' },
+    { id: 'kuriyan-purwa', name: 'कुरियन पुरवा' },
+    { id: 'dammu-purwa', name: 'डम्मू पुरवा' },
+    { id: 'ikghara', name: 'इकघरा' }
   ];
 
   const handleInputChange = (field: string, value: any) => {
@@ -249,14 +249,14 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
     <div className="space-y-6">
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          क्रम संख्या (Serial Number) *
+          क्रम संख्या (BPS बुकलेट) *
         </label>
         <input
           type="number"
           value={formData.serialNumber}
           onChange={(e) => handleInputChange('serialNumber', e.target.value)}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-semibold"
-          placeholder="क्रम संख्या दर्ज करें"
+          placeholder="बुकलेट संख्या दर्ज करें"
           required
           min="1"
         />
@@ -272,16 +272,15 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
         {villages.map((village) => (
           <button
             key={village.id}
-            onClick={() => handleInputChange('village', village.nameEn)}
+            onClick={() => handleInputChange('village', village.name)}
             className={`p-4 rounded-lg border-2 transition-all ${
-              formData.village === village.nameEn
+              formData.village === village.name
                 ? 'border-blue-500 bg-blue-50 text-blue-700'
                 : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
             }`}
           >
             <div className="text-center">
               <div className="text-lg font-semibold">{village.name}</div>
-              <div className="text-sm text-gray-500">{village.nameEn}</div>
             </div>
           </button>
         ))}
@@ -667,7 +666,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between p-3 bg-white rounded border">
             <div>
-              <p className="font-medium">क्रम संख्या</p>
+              <p className="font-medium">बुकलेट संख्या</p>
               <p className="text-gray-600 text-lg font-semibold">#{formData.serialNumber}</p>
             </div>
             <button onClick={() => setCurrentPage(0)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
