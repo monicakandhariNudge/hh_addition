@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Check, Mic, Pencil, Sparkles, Heart, Star, MapPin, Users, MessageSquare } from 'lucide-react';
 import DuplicateCheckScreen from './DuplicateCheckScreen';
+import ProgressCounter from './ProgressCounter';
+import SuccessToast from './SuccessToast';
+import CelebrationModal from './CelebrationModal';
 import { HouseHold } from '../types';
+import { getProgressStats, shouldShowCelebration } from '../utils/progressTracker';
 import femaleGoatIcon from '../assets/female.png';
 import maleGoatIcon from '../assets/male.png';
 
@@ -21,6 +25,14 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   const [currentPage, setCurrentPage] = useState(0);
   const [showDuplicateCheck, setShowDuplicateCheck] = useState(false);
   const [showSuccessGraffiti, setShowSuccessGraffiti] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [lastAddedSerial, setLastAddedSerial] = useState<string>('');
+  const [progressStats, setProgressStats] = useState(getProgressStats(existingHouseholds));
+
+  useEffect(() => {
+    setProgressStats(getProgressStats(existingHouseholds));
+  }, [existingHouseholds]);
   const [formData, setFormData] = useState({
     serialNumber: '',
     village: '',
@@ -150,7 +162,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
       createdAt: new Date()
     };
 
-    const duplicate = existingHouseholds.find(hh => 
+    const duplicate = existingHouseholds.find(hh =>
       hh.hhDidiName.toLowerCase() === formData.hhDidiName.toLowerCase() &&
       hh.village === formData.village
     );
@@ -158,23 +170,45 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
     if (duplicate) {
       setShowDuplicateCheck(true);
     } else {
+      const oldStats = progressStats;
       onAddHousehold(newHousehold);
-      showSuccessAnimation();
+      setLastAddedSerial(formData.serialNumber);
+
+      const newStats = getProgressStats([...existingHouseholds, newHousehold]);
+      setProgressStats(newStats);
+
+      if (shouldShowCelebration(oldStats.todayCount, newStats.todayCount, newStats.dailyTarget)) {
+        showCelebrationAnimation();
+      } else {
+        showSuccessAnimation();
+      }
     }
   };
 
   const showSuccessAnimation = () => {
-    setShowSuccessGraffiti(true);
+    setShowSuccessToast(true);
     sendSMS();
     setTimeout(() => {
-      setShowSuccessGraffiti(false);
+      setShowSuccessToast(false);
       resetForm();
       setCurrentPage(0);
     }, 3000);
   };
 
+  const showCelebrationAnimation = () => {
+    setShowCelebration(true);
+    sendSMS();
+  };
+
+  const handleCelebrationClose = () => {
+    setShowCelebration(false);
+    resetForm();
+    setCurrentPage(0);
+  };
+
   const resetForm = () => {
     setFormData({
+      serialNumber: '',
       village: '',
       hhDidiName: '',
       relativeName: '',
@@ -204,11 +238,21 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
       createdAt: new Date()
     };
 
+    const oldStats = progressStats;
+    setLastAddedSerial(formData.serialNumber);
+
     if (action === 'select') {
       onAddHousehold(newHousehold);
-      showSuccessAnimation();
     } else {
       onAddPending(newHousehold);
+    }
+
+    const newStats = getProgressStats([...existingHouseholds, newHousehold]);
+    setProgressStats(newStats);
+
+    if (shouldShowCelebration(oldStats.todayCount, newStats.todayCount, newStats.dailyTarget)) {
+      showCelebrationAnimation();
+    } else {
       showSuccessAnimation();
     }
 
@@ -807,7 +851,23 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
   return (
     <div className="flex flex-col h-full">
       {showSuccessGraffiti && renderSuccessGraffiti()}
-      
+      {showSuccessToast && (
+        <SuccessToast
+          serialNumber={lastAddedSerial}
+          todayCount={progressStats.todayCount}
+          dailyTarget={progressStats.dailyTarget}
+          onClose={() => setShowSuccessToast(false)}
+        />
+      )}
+      {showCelebration && (
+        <CelebrationModal
+          todayCount={progressStats.todayCount}
+          weekCount={progressStats.weekCount}
+          weeklyTarget={progressStats.weeklyTarget}
+          onClose={handleCelebrationClose}
+        />
+      )}
+
       {/* Compact Header with Serial Number */}
       <div className="bg-white p-3 border-b">
         <div className="flex items-center justify-between">
@@ -834,6 +894,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-4">
+        <ProgressCounter stats={progressStats} />
         {pages[currentPage]()}
       </div>
 
