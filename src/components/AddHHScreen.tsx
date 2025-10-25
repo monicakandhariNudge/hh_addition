@@ -894,7 +894,7 @@ const AddHHScreen: React.FC<AddHHScreenProps> = ({
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-4">
-        <ProgressCounter stats={progressStats} />
+        {currentPage === 0 && <ProgressCounter stats={progressStats} />}
         {pages[currentPage]()}
       </div>
 

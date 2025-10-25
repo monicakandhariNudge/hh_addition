@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, Target, Award } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import { ProgressStats, getMotivationalMessage } from '../utils/progressTracker';
 
 interface ProgressCounterProps {
@@ -10,55 +10,39 @@ const ProgressCounter: React.FC<ProgressCounterProps> = ({ stats }) => {
   const message = getMotivationalMessage(stats);
 
   return (
-    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-lg shadow-lg mb-4">
-      <div className="flex items-center justify-between mb-3">
+    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-3 rounded-lg shadow-md mb-4">
+      <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <TrendingUp className="h-5 w-5" />
-          <span className="font-semibold text-sm">आज की प्रगति</span>
-        </div>
-        <div className="flex items-center space-x-1">
-          <Award className="h-4 w-4 text-yellow-300" />
-          <span className="text-xs opacity-90">लक्ष्य: {stats.dailyTarget}</span>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <div>
-          <div className="flex items-center justify-between mb-1">
+          <TrendingUp className="h-4 w-4" />
+          <div>
             <div className="flex items-center space-x-2">
-              <Target className="h-4 w-4" />
-              <span className="text-sm font-medium">आज</span>
+              <span className="text-sm font-bold">
+                आज: {stats.todayCount}/{stats.dailyTarget}
+              </span>
+              <span className="text-xs opacity-75">•</span>
+              <span className="text-xs opacity-90">
+                सप्ताह: {stats.weekCount}/{stats.weeklyTarget}
+              </span>
             </div>
-            <span className="text-lg font-bold">
-              {stats.todayCount}/{stats.dailyTarget}
-            </span>
-          </div>
-          <div className="w-full bg-white bg-opacity-20 rounded-full h-2.5 overflow-hidden">
-            <div
-              className="bg-gradient-to-r from-green-400 to-emerald-400 h-2.5 rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${stats.todayProgress}%` }}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-xs opacity-90">इस सप्ताह</span>
-            <span className="text-sm font-semibold">
-              {stats.weekCount}/{stats.weeklyTarget}
-            </span>
-          </div>
-          <div className="w-full bg-white bg-opacity-20 rounded-full h-1.5 overflow-hidden">
-            <div
-              className="bg-yellow-300 h-1.5 rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${stats.weekProgress}%` }}
-            />
+            <div className="flex items-center space-x-2 mt-1">
+              <div className="w-20 bg-white bg-opacity-20 rounded-full h-1 overflow-hidden">
+                <div
+                  className="bg-green-400 h-1 rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${stats.todayProgress}%` }}
+                />
+              </div>
+              <div className="w-16 bg-white bg-opacity-20 rounded-full h-1 overflow-hidden">
+                <div
+                  className="bg-yellow-300 h-1 rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${stats.weekProgress}%` }}
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="mt-3 text-center">
-        <p className="text-sm font-medium animate-pulse">{message}</p>
+        <div className="text-right">
+          <p className="text-xs font-medium">{message}</p>
+        </div>
       </div>
     </div>
   );
